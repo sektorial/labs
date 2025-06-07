@@ -32,12 +32,10 @@ class NumberPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    // Лівий клік — додаємо новий потік
                     NumberProducer p = new NumberProducer(e.getX(), e.getY(), NumberPanel.this);
                     producers.add(p);
                     p.start();
                 } else if (SwingUtilities.isRightMouseButton(e)) {
-                    // Правий клік — зупиняємо найближчий
                     if (!producers.isEmpty()) {
                         NumberProducer closest = null;
                         double minDist = Double.MAX_VALUE;
@@ -53,7 +51,6 @@ class NumberPanel extends JPanel {
                         if (closest != null) {
                             closest.stopRunning();
                             producers.remove(closest);
-                            // ось тут — оновлюємо панель, щоб стерти останню цифру
                             repaint();
                         }
                     }
@@ -66,7 +63,6 @@ class NumberPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Малюємо поточні числа всіх Producer-ів
         g.setColor(Color.BLACK);
         for (NumberProducer p : producers) {
             g.drawString(String.valueOf(p.getCurrent()), p.getX(), p.getY());
@@ -98,7 +94,6 @@ class NumberProducer extends Thread {
         return current;
     }
 
-    // Зупинити потік
     public void stopRunning() {
         running = false;
         interrupt();
@@ -109,7 +104,6 @@ class NumberProducer extends Thread {
         try {
             while (running) {
                 current++;
-                // Оновлюємо UI
                 SwingUtilities.invokeLater(panel::repaint);
                 Thread.sleep(500);
             }

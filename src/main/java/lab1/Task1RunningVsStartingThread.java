@@ -7,7 +7,7 @@ public class Task1RunningVsStartingThread {
         final Thread thread = new Thread(task);
         System.out.println("--- Виконання логіки без запуску нового потоку ---");
         System.out.println("Count до запуску: " + task.getCount());
-        thread.run();  // прямий виклик: виконується в потоці main
+        thread.run();
         System.out.println("Count після запуску: " + task.getCount());
 
         System.out.println("--- Відновлення count ---");
@@ -20,35 +20,9 @@ public class Task1RunningVsStartingThread {
             System.out.println("Main Count: " + mainCount);
             Thread.sleep(200);
         }
-        thread.join();  // чекаємо завершення дочірнього потоку
+        thread.join();
         System.out.println("Count після запуску: " + task.getCount());
     }
-}
-
-class MyTask implements Runnable {
-    private int count = 0;
-
-    public void run() {
-        System.out.println(">> Запущено MyTask");
-        while (count <= 10) {
-            System.out.println("\tCount: " + count);
-            count++;
-            try {
-                Thread.sleep(150);
-            } catch (InterruptedException ignored) {
-            }
-        }
-        System.out.println(">> Завершено MyTask");
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void resetCount() {
-        count = 0;
-    }
-
 }
 
 

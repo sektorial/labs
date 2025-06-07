@@ -28,5 +28,11 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-.idea/**
-*.iml
+### IntelliJ IDEA ###
+**.idea
+**.iws
+**.iml
+**.ipr
+
+## Maven
+**/target
